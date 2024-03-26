@@ -1,0 +1,16 @@
+REST API - JSON
+// mockaroo.com - sample data
+
+GET /users - html document render
+GET /api/users - list all users
+
+GET /api/users/1 - list user with id 1
+
+Dynamic Parameters
+/api/users/:id - id = variableS
+
+PUT /api/users - create new user
+
+PATCH /api/users/2 - update user with id 2
+
+DELETE /api/users/3 - delete user with ID 3
