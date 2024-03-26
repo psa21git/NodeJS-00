@@ -5,7 +5,27 @@ const app = express();
 const PORT = 8000;
 
 //MiddleWare
-app.use(express.urlencoded( { extended: false } )); //Parse URL
+app.use(express.urlencoded({ extended: false })); //Parse URL
+
+app.use((req, res, next) => {
+    req.userName = "psa.dev"
+    next();
+    // return res.json({ msg: "Hello from MiddleWare 1" })
+    console.log("Hello from MiddleWare 1");
+})
+app.use((req, res, next) => {
+    console.log("Hey from MiddleWare 2", req.userName)
+    next();
+})
+
+app.use((req, res, next) => {
+    fs.appendFile(
+        'log.txt',
+        `${Date.now()} ${req.method} ${req.path} ${req.userName}\n`,
+        (err, data) => {
+            next();
+        })
+})
 
 //Routes
 app
@@ -19,34 +39,34 @@ app
     .patch((req, res) => {
         // TOOD: Update user
         const updateId = Number(req.params.id)
-        users.forEach((user)=>{
-            if(user.id === updateId){
+        users.forEach((user) => {
+            if (user.id === updateId) {
                 user.first_name = req.query.first_name
                 user.last_name = req.query.last_name
                 user.email = req.query.email
             }
         })
-        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err,data) => {
-            return res.json({status: "user updated",id:updateId})
+        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+            return res.json({ status: "user updated", id: updateId })
         })
     })
     .delete((req, res) => {
         // TOOD: delete user
         const deleteId = Number(req.params.id)
-        users.forEach((user)=>{
-            if(user.id === deleteId) users.pop(user)
+        users.forEach((user) => {
+            if (user.id === deleteId) users.pop(user)
         })
-        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err,data) => {
-            return res.json({status: "user deleted",id:deleteId})
+        fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+            return res.json({ status: "user deleted", id: deleteId })
         })
     })
 
-app.post( '/api/users', ( req, res )=>{
+app.post('/api/users', (req, res) => {
     // TOOD: Create user
     const body = req.body
-    users.push({...body,id: users.length+1})
-    fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err,data) => {
-        return res.json({status: "user added",id:users.length})
+    users.push({ ...body, id: users.length + 1 })
+    fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
+        return res.json({ status: "user added", id: users.length })
     })
 })
 

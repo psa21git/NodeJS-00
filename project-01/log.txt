@@ -1,0 +1,6 @@
+LOG FILE
+1711464374042 GET /api/users/101 psa.dev
+1711464507265 POST /api/users psa.dev
+1711464514566 POST /api/users psa.dev
+1711464516041 POST /api/users psa.dev
+1711464566259 GET /api/users/101 psa.dev
