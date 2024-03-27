@@ -33,7 +33,7 @@ app
     .get((req, res) => {
         const id = Number(req.params.id);
         const user = users.find(user => user.id === id);
-        if (!user) return res.status(404).send({ message: 'User not found' });
+        if (!user) return res.status(404).send({ error: 'User not found' });
         else res.json(user)
     })
     .patch((req, res) => {
@@ -62,11 +62,14 @@ app
     })
 
 app.post('/api/users', (req, res) => {
-    // TOOD: Create user
+    // TOOD: Create user  
     const body = req.body
+    if (!body || !body.first_name || !body.last_name || !body.email || !body.job_title) {
+        return res.status(400).json({ msg: "All fields are req..." })
+    }
     users.push({ ...body, id: users.length + 1 })
     fs.writeFile('./MOCK_DATA.json', JSON.stringify(users), (err, data) => {
-        return res.json({ status: "user added", id: users.length })
+        return res.status(201).json({ status: "user added", id: users.length })
     })
 })
 
@@ -82,9 +85,9 @@ app.get('/users', (req, res) => {
 
 //REST API
 app.get('/api/users', (req, res) => {
+    res.setHeader("X-myName","PSA");// Custom Headers
+    // Add X before header name for custom headers
     return res.json(users);
 })
-
-
 
 app.listen(PORT, () => { console.log(`Server started at PORT: ${PORT}`); })
