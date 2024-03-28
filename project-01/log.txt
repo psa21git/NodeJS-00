@@ -22,3 +22,16 @@ LOG FILE
 1711557998299 POST /api/users psa.dev
 1711558004407 POST /api/users psa.dev
 1711558008378 POST /api/users psa.dev
+1711605269630 GET / psa.dev
+1711605910653 POST /api/users psa.dev
+1711606083106 POST /api/users psa.dev
+1711606281300 GET /users psa.dev
+1711606281977 GET /favicon.ico psa.dev
+1711606335927 GET /users psa.dev
+1711606349405 GET /users psa.dev
+1711606470253 GET /api/users psa.dev
+1711607147142 PATCH /api/users/66050943bd5ce5658e3afbb5 psa.dev
+1711607184737 PATCH /api/users/66050943bd5ce5658e3afbb5 psa.dev
+1711607190608 GET /api/users psa.dev
+1711607227564 PATCH /api/users/66050943bd5ce5658e3afbb5 psa.dev
+1711607230348 GET /api/users psa.dev
