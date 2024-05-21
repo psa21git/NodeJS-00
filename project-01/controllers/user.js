@@ -1,5 +1,8 @@
 const User  = require("../models/user")
 
+//Controllers matlab basically hamare jo funcitons hote hain jo database pe kaam karrte hain 
+
+
 async function handleGetAllUsers(req,res){
     const allDbUsers = await User.find({})
     return res.json(allDbUsers);
