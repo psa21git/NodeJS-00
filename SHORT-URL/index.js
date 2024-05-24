@@ -1,9 +1,15 @@
 const express = require('express')
 const path = require("path")
+
 const urlRoute = require('./routes/url')
 const staticRoute = require('./routes/staticRouter')
+const userRoute = require('./routes/user')
+
+const {restrictToLoggedInUserOnly,checkAuth} = require('./middleware/auth')
+
 const {connectMongoDb} = require('./connect')
 const URL =  require('./models/url')
+const cookieParser = require('cookie-parser')
 
 const app = express()
 const PORT = 8001
@@ -14,11 +20,13 @@ app.set("views",path.resolve("./views"))
 connectMongoDb("mongodb://localhost:27017/short-url")
 
 app.use(express.json()) // for parsing application/json
-app.use(express.urlencoded({extended: false})) // for parsing form data as input
+app.use(express.urlencoded({extended: false})) // for parsing 'form' data as input
+app.use(cookieParser())
 
-app.use("/url",urlRoute)
-app.use('/',staticRoute)
-  
+app.use("/url",restrictToLoggedInUserOnly,urlRoute)
+app.use('/',checkAuth,staticRoute)
+app.use('/user',userRoute)
+
 /*
 // paste this is in home for list of shortIds
  <% urls.forEach(url => { %>
